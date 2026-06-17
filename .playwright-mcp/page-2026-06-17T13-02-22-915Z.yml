@@ -1,0 +1,27 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e18] [cursor=pointer]:
+    - img [ref=e19]
+  - alert [ref=e22]
+  - generic [ref=e23]:
+    - generic [ref=e25]:
+      - generic [ref=e26]: 新手
+      - generic [ref=e29]: 110 / 120
+      - generic [ref=e30]: ⭐ 1
+    - generic [ref=e34]: 😊
+    - generic [ref=e39]:
+      - generic [ref=e40]: 难度 ★☆☆☆☆
+      - paragraph [ref=e42]: 收到陌生中奖短信链接，应该怎么办？
+      - generic [ref=e43]:
+        - button "A 点击链接查看详情" [disabled] [ref=e44]:
+          - generic [ref=e45]: A
+          - generic [ref=e46]: 点击链接查看详情
+        - button "B 按提示填写个人信息" [disabled] [ref=e47]:
+          - generic [ref=e48]: B
+          - generic [ref=e49]: 按提示填写个人信息
+        - button "C 忽略并删除" [disabled] [ref=e50]:
+          - generic [ref=e51]: C
+          - generic [ref=e52]: 忽略并删除
+        - button "D 回复短信询问" [disabled] [ref=e53]:
+          - generic [ref=e54]: D
+          - generic [ref=e55]: 回复短信询问
+    - button "← 返回主菜单" [ref=e38] [cursor=pointer]

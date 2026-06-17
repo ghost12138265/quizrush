@@ -1,0 +1,12 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e18] [cursor=pointer]:
+    - img [ref=e19]
+  - alert [ref=e22]
+  - generic [ref=e23]:
+    - generic [ref=e25]:
+      - generic [ref=e26]: 新手
+      - generic [ref=e29]: 100 / 120
+      - generic [ref=e30]: ⭐ 0
+    - generic [ref=e34]: 😶
+    - generic [ref=e37]: 🤔 AI 正在出题...
+    - button "← 返回主菜单" [ref=e38] [cursor=pointer]

@@ -1,0 +1,32 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e18] [cursor=pointer]:
+    - img [ref=e19]
+  - alert [ref=e22]
+  - generic [ref=e23]:
+    - generic [ref=e25]:
+      - generic [ref=e26]: 新手
+      - generic [ref=e29]: 95 / 120
+      - generic [ref=e30]: ⭐ 1
+    - generic [ref=e34]: 😢
+    - generic [ref=e36]:
+      - generic [ref=e60]:
+        - generic [ref=e61]: 难度 ★★★☆☆
+        - paragraph [ref=e63]: 哪种食品保存方法不科学？
+        - generic [ref=e64]:
+          - button "A 肉类冷冻保存" [disabled] [ref=e65]:
+            - generic [ref=e66]: A
+            - generic [ref=e67]: 肉类冷冻保存
+          - button "B 剩菜趁热放入冰箱" [disabled] [ref=e68]:
+            - generic [ref=e69]: B
+            - generic [ref=e70]: 剩菜趁热放入冰箱
+          - button "C 干货密封保存" [disabled] [ref=e71]:
+            - generic [ref=e72]: C
+            - generic [ref=e73]: 干货密封保存
+          - button "D 绿叶菜冷藏保存" [disabled] [ref=e74]:
+            - generic [ref=e75]: D
+            - generic [ref=e76]: 绿叶菜冷藏保存
+      - generic [ref=e77]:
+        - generic [ref=e78]: ❌
+        - generic [ref=e79]: "-15 HP"
+        - generic [ref=e80]: 剩菜应放凉后(不超2小时)再进冰箱。热菜直接放入会升高冰箱温度，影响其他食物保鲜，也增加能耗。
+    - button "← 返回主菜单" [ref=e38] [cursor=pointer]

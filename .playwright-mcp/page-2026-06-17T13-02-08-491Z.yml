@@ -1,0 +1,8 @@
+- generic [ref=e2]:
+  - generic [ref=e5]: 😶
+  - heading "答题闯关" [level=1] [ref=e7]
+  - paragraph [ref=e8]: 生活常识 · AI 出题 · 每日挑战
+  - generic [ref=e9]:
+    - button "🏰 闯关模式" [ref=e10] [cursor=pointer]
+    - button "♾️ 无限挑战" [ref=e11] [cursor=pointer]
+    - button "💾 存档管理" [ref=e12] [cursor=pointer]

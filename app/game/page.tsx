@@ -1,7 +1,7 @@
 // app/game/page.tsx
 'use client';
 
-import { useEffect, useCallback, useRef, useState } from 'react';
+import { useEffect, useCallback, useRef, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useGameStore } from '@/lib/game-store';
 import { fetchQuestion, preloadQueue } from '@/lib/ai';
@@ -15,7 +15,7 @@ import GameOverScreen from '@/components/GameOverScreen';
 import { GameMode } from '@/types';
 import { loadSave } from '@/lib/save';
 
-export default function GamePage() {
+function GamePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -291,5 +291,20 @@ export default function GamePage() {
         />
       )}
     </div>
+  );
+}
+
+export default function GamePage() {
+  return (
+    <Suspense fallback={
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        minHeight: '100vh', color: '#888', fontSize: 18,
+      }}>
+        ⏳ 加载中...
+      </div>
+    }>
+      <GamePageContent />
+    </Suspense>
   );
 }

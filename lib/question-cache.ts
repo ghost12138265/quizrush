@@ -13,13 +13,6 @@ function hashText(text: string): string {
   return `q_${Math.abs(hash).toString(36)}`;
 }
 
-export function getCached(textHints: string): Question | null {
-  for (const [key, entry] of cache) {
-    if (key.includes(textHints)) return entry.question;
-  }
-  return null;
-}
-
 export function addToCache(question: Question): void {
   const key = hashText(question.question);
   if (!cache.has(key)) {

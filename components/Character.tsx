@@ -8,8 +8,8 @@ interface CharacterProps {
   animating: boolean;
 }
 
-const HAT_COLORS = ['', '#FF9800', '#2196F3', '#9C27B0', '#FFD700'];
-const CAPE_COLORS = ['', '', '', '#E91E63', '#FF5722'];
+const HAT_COLORS = ['', '#FF9800', '#2196F3', '#9C27B0', '#FFD700', '#FFD700'];
+const CAPE_COLORS = ['', '', '', '#E91E63', '#FF5722', '#FF5722'];
 
 export default function Character({ stage, emotion, animating }: CharacterProps) {
   const faceMap: Record<CharacterEmotion, string> = {

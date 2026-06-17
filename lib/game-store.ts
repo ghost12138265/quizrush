@@ -100,10 +100,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
       healthChange += COMBO_BONUS;
     }
 
-    const newHealth = Math.max(0, state.health + healthChange);
-    const newScore = correct ? state.score + 1 : state.score;
-    const newStage = getStageForHealth(newHealth, state.stage);
+    const newStage = getStageForHealth(state.health + healthChange, state.stage);
     const newMaxHealth = getMaxHealth(newStage);
+    const newHealth = Math.min(newMaxHealth, Math.max(0, state.health + healthChange));
+    const newScore = correct ? state.score + 1 : state.score;
 
     const record: AnswerRecord = {
       questionId: state.currentQuestion.id,

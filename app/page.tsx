@@ -16,5 +16,13 @@ export default function HomePage() {
     }
   };
 
-  return <MainMenu onStart={handleStart} />;
+  const handleKnowledgeBase = () => {
+    router.push('/knowledge');
+  };
+
+  const handleWrongBook = () => {
+    router.push('/wrong-book');
+  };
+
+  return <MainMenu onStart={handleStart} onKnowledgeBase={handleKnowledgeBase} onWrongBook={handleWrongBook} />;
 }

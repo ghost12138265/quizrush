@@ -105,9 +105,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const newHealth = Math.min(newMaxHealth, Math.max(0, state.health + healthChange));
     const newScore = correct ? state.score + 1 : state.score;
 
+    const q = state.currentQuestion;
     const record: AnswerRecord = {
-      questionId: state.currentQuestion.id,
+      questionId: q.id,
+      questionText: q.question,
+      options: q.options,
       selectedAnswer: answer,
+      correctAnswer: q.answer,
+      explanation: q.explanation,
       correct,
       timestamp: Date.now(),
     };

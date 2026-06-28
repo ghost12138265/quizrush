@@ -5,7 +5,7 @@ import { useEffect, useCallback, useRef, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useGameStore } from '@/lib/game-store';
 import { fetchQuestion, preloadQueue } from '@/lib/ai';
-import { PRELOAD_QUEUE_SIZE, ANSWER_DISPLAY_MS, HEALTH_GAIN, HEALTH_LOSS } from '@/lib/constants';
+import { PRELOAD_QUEUE_SIZE, HEALTH_GAIN, HEALTH_LOSS } from '@/lib/constants';
 import Character from '@/components/Character';
 import HealthBar from '@/components/HealthBar';
 import QuestionCard from '@/components/QuestionCard';
@@ -90,9 +90,9 @@ function GamePageContent() {
     }
   }, [questionQueue, currentQuestion, status]);
 
-  // 自动存档
+  // 自动存档 — 每次答题后立即保存
   useEffect(() => {
-    if (status === 'playing' && history.length > 0) {
+    if (history.length > 0) {
       autoSave();
     }
   }, [history.length]);
@@ -125,32 +125,23 @@ function GamePageContent() {
     }, 400);
   }, [status, currentQuestion, stage, selectAnswer]);
 
-  // 结果展示后自动进入下一题
-  useEffect(() => {
-    if (!showResult) return;
+  // 手动进入下一题
+  const handleNext = () => {
+    setShowResult(false);
+    setSelectedAnswer(null);
+    setAnswerState({});
 
-    const timer = setTimeout(() => {
-      setShowResult(false);
-      setSelectedAnswer(null);
-      setAnswerState({});
+    if (stage > prevStage) {
+      setShowLevelUp(true);
+      return;
+    }
 
-      // 检查升级
-      if (stage > prevStage) {
-        setShowLevelUp(true);
-        return;
-      }
+    if (health <= 0) {
+      return;
+    }
 
-      // 检查游戏结束
-      if (health <= 0) {
-        return;
-      }
-
-      // 下一题
-      setQuestion(null as any);
-    }, ANSWER_DISPLAY_MS);
-
-    return () => clearTimeout(timer);
-  }, [showResult]);
+    setQuestion(null as any);
+  };
 
   const handleLevelUpContinue = () => {
     setShowLevelUp(false);
@@ -188,17 +179,17 @@ function GamePageContent() {
       maxWidth: 420,
       margin: '0 auto',
       minHeight: '100vh',
-      padding: '16px 16px 32px',
+      padding: '8px 16px 16px',
       display: 'flex',
       flexDirection: 'column',
     }}>
       {/* 顶部栏 */}
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 0 }}>
         <HealthBar health={health} maxHealth={maxHealth} stage={stage} score={score} />
       </div>
 
       {/* 角色区域 */}
-      <div style={{ textAlign: 'center', marginBottom: 16, position: 'relative' }}>
+      <div style={{ textAlign: 'center', marginBottom: 0, position: 'relative' }}>
         <Character
           stage={stage}
           emotion={status === 'gameover' ? 'dead' : emotion}
@@ -249,6 +240,7 @@ function GamePageContent() {
             correct={lastCorrect}
             healthChange={lastCorrect ? HEALTH_GAIN : -HEALTH_LOSS}
             emotion={lastCorrect ? 'happy' : 'hurt'}
+            onNext={handleNext}
           />
         )}
       </div>

@@ -8,12 +8,15 @@ import Character from './Character';
 
 interface MainMenuProps {
   onStart: (mode: 'level' | 'endless', resumeData?: ReturnType<typeof loadSave>) => void;
+  onKnowledgeBase: () => void;
+  onWrongBook: () => void;
 }
 
-export default function MainMenu({ onStart }: MainMenuProps) {
+export default function MainMenu({ onStart, onKnowledgeBase, onWrongBook }: MainMenuProps) {
   const [saveExists, setSaveExists] = useState(false);
   const [showSaveManager, setShowSaveManager] = useState(false);
-  const [savePreview, setSavePreview] = useState<{ stage: number; score: number; mode: string } | null>(null);
+  const [savePreview, setSavePreview] = useState<{ stage: number; score: number; mode: string; wrongCount: number } | null>(null);
+  const [hasWrongAnswers, setHasWrongAnswers] = useState(false);
 
   useEffect(() => {
     const exists = hasSave();
@@ -21,7 +24,9 @@ export default function MainMenu({ onStart }: MainMenuProps) {
     if (exists) {
       const data = loadSave();
       if (data) {
-        setSavePreview({ stage: data.stage, score: data.score, mode: data.mode });
+        const wrongCount = data.history?.filter(r => !r.correct).length || 0;
+        setHasWrongAnswers(wrongCount > 0);
+        setSavePreview({ stage: data.stage, score: data.score, mode: data.mode, wrongCount });
       }
     }
   }, []);
@@ -78,6 +83,19 @@ export default function MainMenu({ onStart }: MainMenuProps) {
         <button onClick={() => setShowSaveManager(true)} style={btnStyle('#555')}>
           💾 存档管理
         </button>
+
+        <button onClick={onKnowledgeBase} style={btnStyle('#9C27B0')}>
+          📚 知识库
+        </button>
+
+        {hasWrongAnswers && (
+          <button onClick={onWrongBook} style={btnStyle('#F44336')}>
+            📝 错题本
+            <span style={{ display: 'block', fontSize: 11, color: '#ffccbc', marginTop: 2 }}>
+              {savePreview?.wrongCount || 0} 道错题
+            </span>
+          </button>
+        )}
       </div>
 
       {showSaveManager && (
@@ -85,7 +103,11 @@ export default function MainMenu({ onStart }: MainMenuProps) {
           setShowSaveManager(false);
           setSaveExists(hasSave());
           const data = loadSave();
-          if (data) setSavePreview({ stage: data.stage, score: data.score, mode: data.mode });
+          if (data) {
+            const wrongCount = data.history?.filter(r => !r.correct).length || 0;
+            setHasWrongAnswers(wrongCount > 0);
+            setSavePreview({ stage: data.stage, score: data.score, mode: data.mode, wrongCount });
+          }
         }} />
       )}
     </div>

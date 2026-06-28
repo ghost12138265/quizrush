@@ -15,7 +15,11 @@ export interface Question {
 
 export interface AnswerRecord {
   questionId: string;
+  questionText: string;
+  options: [string, string, string, string];
   selectedAnswer: string;
+  correctAnswer: string;
+  explanation: string;
   correct: boolean;
   timestamp: number;
 }
@@ -45,6 +49,17 @@ export interface SaveData {
   history: AnswerRecord[];
   savedAt: string;
   version: number;
+}
+
+export type KnowledgeCategory = '健康用药' | '消费维权' | '出行安全' | '生活常识';
+
+export interface KnowledgeEntry {
+  id: string;
+  category: KnowledgeCategory;
+  title: string;
+  content: string;
+  sourceName: string;
+  sourceUrl: string;
 }
 
 export const STAGE_NAMES: Record<number, string> = {

@@ -1,4 +1,5 @@
 // lib/constants.ts
+import { KnowledgeCategory } from '@/types';
 
 export const INITIAL_HEALTH = 100;
 export const HEALTH_GAIN = 10;
@@ -28,3 +29,15 @@ export const QUESTION_TOPICS = [
 ];
 
 export const MAX_QUESTIONS_PER_SESSION = 200;
+
+// 知识库分类
+export const KNOWLEDGE_CATEGORIES: KnowledgeCategory[] = [
+  '健康用药', '消费维权', '出行安全', '生活常识',
+];
+
+export const CATEGORY_INFO: Record<KnowledgeCategory, { emoji: string; color: string; label: string }> = {
+  '健康用药': { emoji: '💊', color: '#4CAF50', label: '健康用药' },
+  '消费维权': { emoji: '🛡️', color: '#FF9800', label: '消费维权' },
+  '出行安全': { emoji: '🚗', color: '#2196F3', label: '出行安全' },
+  '生活常识': { emoji: '💡', color: '#9C27B0', label: '生活常识' },
+};

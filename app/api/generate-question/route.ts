@@ -1,7 +1,7 @@
 // app/api/generate-question/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { GenerateQuestionRequest, GenerateQuestionResponse, Question } from '@/types';
-import { addToCache, isDuplicate } from '@/lib/question-cache';
+import { addToCache, isDuplicate, getFromPersistentBank } from '@/lib/question-cache';
 import { FALLBACK_QUESTIONS } from '@/lib/fallback-questions';
 
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY!;
@@ -116,14 +116,21 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // AI 生成失败，使用兜底题库
+    // AI 生成失败，依次尝试：持久化题库 → 硬编码题库
     if (!question) {
       const usedIds = new Set(previousQuestionIds);
-      const available = FALLBACK_QUESTIONS.filter(q => !usedIds.has(q.id));
-      if (available.length > 0) {
-        question = available[Math.floor(Math.random() * available.length)];
-      } else {
-        question = FALLBACK_QUESTIONS[Math.floor(Math.random() * FALLBACK_QUESTIONS.length)];
+
+      // 先从持久化题库中获取
+      question = getFromPersistentBank([...usedIds]);
+
+      // 持久化题库也没有，从硬编码题库获取
+      if (!question) {
+        const allFallback = FALLBACK_QUESTIONS.filter(q => !usedIds.has(q.id));
+        if (allFallback.length > 0) {
+          question = allFallback[Math.floor(Math.random() * allFallback.length)];
+        } else {
+          question = FALLBACK_QUESTIONS[Math.floor(Math.random() * FALLBACK_QUESTIONS.length)];
+        }
       }
     }
 
